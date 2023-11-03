@@ -16,10 +16,10 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
@@ -28,7 +28,7 @@ public class User {
     Long id;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;

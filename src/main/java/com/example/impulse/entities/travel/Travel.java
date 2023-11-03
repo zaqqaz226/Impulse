@@ -1,14 +1,8 @@
 package com.example.impulse.entities.travel;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Data
@@ -20,7 +14,7 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "days_in_travel")
+/*    @Column(name = "days_in_travel")
     public Integer daysInTravel;
 
     @Column(name = "road_budget")
@@ -73,7 +67,7 @@ public class Travel {
     @EqualsAndHashCode.Exclude
     public List<Person> personsList;
 
-/*    @OneToMany
+*//*    @OneToMany
     public List<PhotosLinks> photosLinksList;
 
     @OneToMany

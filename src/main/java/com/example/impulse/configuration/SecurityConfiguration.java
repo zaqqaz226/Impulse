@@ -14,18 +14,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import javax.sql.DataSource;
 import java.util.stream.Collectors;
 
 
 @EnableWebSecurity
 @Configuration
-//@RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     public SecurityConfiguration(UserRepository userRepository, RoleRepository roleRepository) {
@@ -51,6 +52,11 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    public JdbcUserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
+    @Bean
     public UserDetailsService userDetailsService(@Value("user") String userName) {
 
         UserDetails userDetails = loadUserByUserName(userName);
@@ -64,7 +70,7 @@ public class SecurityConfiguration {
         );
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUserName(),
+                user.getUsername(),
                 user.getPassword(),
                 user.getRoles().stream()
                         .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList())
